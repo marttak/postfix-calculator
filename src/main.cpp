@@ -34,15 +34,14 @@ char get_command()
       command = tolower(command);
       if (command == '?' || command == '=' || command == '+' ||
           command == '-' || command == '*' || command == '/' ||
-          command == 'q' || command == 'x' ) waiting = false;
+          command == 'q' || command == 'x' || command == 's' ||
+          command == 'a') waiting = false;
 
 
       else {
-         cout << "Please enter a valid command:"   << endl
-              << "[?]push to stack   [=]print top" << endl
-              << "e[x]change positions of two topmost numbers" << endl
-              << "[+] [-] [*] [/]   are arithmetic operations" << endl
-              << "[Q]uit." << endl;
+         cout << endl << endl;
+         instructions();
+         cout << "Select command and press <Enter>:";
       }
    }
    return command;
@@ -59,7 +58,9 @@ Uses: The class Stack.
 */
 
 {
-   double p, q;
+   double p, q, sum, avg;
+   int count = 0;
+
    switch (command) {
    case '?':
       cout << "Enter a real number: " << flush;
@@ -153,7 +154,7 @@ Uses: The class Stack.
          cout << "Stack empty" << endl;
       else {
          numbers.pop();
-         if( numbers.top(q) == underflow){
+         if(numbers.top(q) == underflow){
             cout << "Stack has just one entry" << endl;
             numbers.push(p);
          }
@@ -164,12 +165,42 @@ Uses: The class Stack.
          }
       }
       break;
-   //   Add options for further user commands.
+   
+   case 's':
+      if(numbers.top(p) == underflow)
+         cout << "Stack empty" << endl;
+      else {
+         while(!numbers.empty()){
+            numbers.top(p);
+            sum += p;
+            numbers.pop();
+         }
+         numbers.push(sum);
+      }
+      break;
+   
+   case 'a':
+      if(numbers.top(p) == underflow)
+         cout << "Stack empty" << endl;
+      else {
+         while(!numbers.empty()){
+            numbers.top(p);
+            sum += p;
+            count++;
+            numbers.pop();
+         }
+         avg = sum / count;
+         numbers.push(avg);
+      }
+      break;
 
-    case 'q':
+   case 'q':
       cout << "Calculation finished.\n";
       return false;
    }
+
+   //   Add options for further user commands.
+
    return true;
 }
 
@@ -183,6 +214,8 @@ void introduction(){
 void instructions(){
    cout << "Use following commands:"   << endl
               << "[?]push to stack   [=]print top" << endl
+              << "e[x]change positions of two topmost numbers" << endl
+              << "[s]um of all numbers in stack" << endl
               << "[+] [-] [*] [/]   are arithmetic operations" << endl
               << "[Q]uit." << endl << endl;
 }
