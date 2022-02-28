@@ -34,12 +34,13 @@ char get_command()
       command = tolower(command);
       if (command == '?' || command == '=' || command == '+' ||
           command == '-' || command == '*' || command == '/' ||
-          command == 'q' ) waiting = false;
+          command == 'q' || command == 'x' ) waiting = false;
 
 
       else {
          cout << "Please enter a valid command:"   << endl
               << "[?]push to stack   [=]print top" << endl
+              << "e[x]change positions of two topmost numbers" << endl
               << "[+] [-] [*] [/]   are arithmetic operations" << endl
               << "[Q]uit." << endl;
       }
@@ -91,7 +92,78 @@ Uses: The class Stack.
          }
       }
       break;
+   
+   case '-':
+      if(numbers.top(p) == underflow)
+         cout << "Stack empty" << endl;
+      else {
+         numbers.pop();
+         if(numbers.top(q) == underflow) {
+            cout << "Stack has just one entry" << endl;
+            numbers.push(p);
+         } 
+         
+         else {
+            numbers.pop();
+            if(numbers.push(q - p) == overflow)
+               cout << "Warning: Stack full, lost result" << endl;
+         }
+      }
 
+      break;
+   
+   case '*':
+      if(numbers.top(p) == underflow)
+         cout << "Stack empty" << endl;
+      else {
+         numbers.pop();
+         if(numbers.top(q) == underflow) {
+            cout << "Stack has just one entry" << endl;
+            numbers.push(p);
+         } 
+         
+         else {
+            numbers.pop();
+            if(numbers.push(q * p) == overflow)
+               cout << "Warning: Stack full, lost result" << endl;
+         }
+      }
+      break;
+   
+   case '/':
+      if(numbers.top(p) == underflow)
+         cout << "Stack empty" << endl;
+      else {
+         numbers.pop();
+         if(numbers.top(q) == underflow) {
+            cout << "Stack has just one entry" << endl;
+            numbers.push(p);
+         } 
+         
+         else {
+            numbers.pop();
+            if(numbers.push(q / p) == overflow)
+               cout << "Warning: Stack full, lost result" << endl;
+         }
+      }
+      break;
+
+   case 'x':
+      if(numbers.top(p) == underflow)
+         cout << "Stack empty" << endl;
+      else {
+         numbers.pop();
+         if( numbers.top(q) == underflow){
+            cout << "Stack has just one entry" << endl;
+            numbers.push(p);
+         }
+         else {
+            numbers.pop();
+            numbers.push(p);
+            numbers.push(q);
+         }
+      }
+      break;
    //   Add options for further user commands.
 
     case 'q':
